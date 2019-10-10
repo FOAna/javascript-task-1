@@ -8,18 +8,28 @@
  * @returns {Number} Сумма аргументов
  */
 function abProblem(a, b) {
-    // Ваше решение
+    if ((typeof a !== 'number') || (typeof b !== 'number')) {
+        throw new TypeError('В аргументы переданы не числа!');
+    }
+
+    return a + b;
 }
 
 /**
- * Определяет век по году
+ * Определяет век по годуs
  * @param {Number} year Год, целое положительное число
  * @throws {TypeError} Когда в качестве года передано не число
  * @throws {RangeError} Когда год – отрицательное значение
  * @returns {Number} Век, полученный из года
  */
 function centuryByYearProblem(year) {
-    // Ваше решение
+    if (typeof year !== 'number') {
+        throw new TypeError('Передано не число!');
+    } else if (year < 0) {
+        throw new RangeError('Передано отрицательное число!');
+    }
+
+    return (year - year % 100) / 100 + 1;
 }
 
 /**
@@ -30,7 +40,18 @@ function centuryByYearProblem(year) {
  * @returns {String} Цвет в формате RGB, например, '(255, 255, 255)'
  */
 function colorsProblem(hexColor) {
-    // Ваше решение
+    const reg = /^#[0-9A-Fa-f]{6}/; // Шаблон формата HEX
+    if (typeof hexColor !== 'string') {
+        throw new TypeError('Цвет передан не строкой!');
+    } else if (!reg.test(hexColor)) {
+        throw new RangeError('Значения цвета выходят за пределы допустимых!');
+    }
+    // Посимвольный перевод в десятичную систему счисления
+    const r = parseInt(hexColor.charAt(1) + hexColor.charAt(2), 16);
+    const g = parseInt(hexColor.charAt(3) + hexColor.charAt(4), 16);
+    const b = parseInt(hexColor.charAt(5) + hexColor.charAt(6), 16);
+
+    return '(' + r + ', ' + g + ', ' + b + ')';
 }
 
 /**
@@ -41,7 +62,21 @@ function colorsProblem(hexColor) {
  * @returns {Number} Число Фибоначчи, находящееся на n-ой позиции
  */
 function fibonacciProblem(n) {
-    // Ваше решение
+    if (typeof n !== 'number') {
+        throw new TypeError('Передано не число!');
+    } else if ((n <= 0) || (!Number.isInteger(n))) {
+        throw new RangeError('Переданное число не является целым положительным!');
+    }
+    let fibPrePrev = 0; // Начальные значения для n = 1 или 2
+    let fibPrev = 1;
+    let fib = 1;
+    for (let i = 3; i <= n; i++) {
+        fibPrePrev = fibPrev;
+        fibPrev = fib;
+        fib = fibPrev + fibPrePrev;
+    }
+
+    return fib;
 }
 
 /**
@@ -51,7 +86,18 @@ function fibonacciProblem(n) {
  * @returns {(Any[])[]} Транспонированная матрица размера NxM
  */
 function matrixProblem(matrix) {
-    // Ваше решение
+    if ((!Array.isArray(matrix)) || (!matrix.every(Array.isArray))) {
+        throw new TypeError('Передан не двумерный массив!');
+    }
+    let matrixTransp = [];
+    for (let i = 0; i < matrix.length; i ++) {
+        matrixTransp.push([]);
+        for (let j = 0; j < matrix[i].length; j ++) {
+            matrixTransp[i].push(matrix[j][i]);
+        }
+    }
+
+    return matrixTransp;
 }
 
 /**
@@ -63,7 +109,13 @@ function matrixProblem(matrix) {
  * @returns {String} Число n в системе счисления targetNs
  */
 function numberSystemProblem(n, targetNs) {
-    // Ваше решение
+    if ((typeof n !== 'number') || (typeof targetNs !== 'number')) {
+        throw new TypeError('Переданные аргументы некорректного типа!');
+    } else if ((targetNs < 2) || (targetNs > 36)) {
+        throw new RangeError('Система счисления может иметь значение от 2 до 36');
+    }
+
+    return n.toString(targetNs);
 }
 
 /**
@@ -72,7 +124,11 @@ function numberSystemProblem(n, targetNs) {
  * @returns {Boolean} Если соответствует формату, то true, а иначе false
  */
 function phoneProblem(phoneNumber) {
-    // Ваше решение
+    if (typeof phoneNumber !== 'string') {
+        throw new TypeError('Переданный номер некорректного типа!');
+    }
+
+    return /^8-800-[0-9]{3}-[0-9]{2}-[0-9]{2}/.test(phoneNumber);
 }
 
 /**
@@ -82,7 +138,12 @@ function phoneProblem(phoneNumber) {
  * @returns {Number} Количество улыбающихся смайликов в строке
  */
 function smilesProblem(text) {
-    // Ваше решение
+    if (typeof text !== 'string') {
+        throw new TypeError('Передана не строка!');
+    }
+    const matches = text.match(/:-\)|\(-:/g);
+
+    return matches ? matches.length : 'Смайлики не найдены!';
 }
 
 /**
@@ -92,7 +153,7 @@ function smilesProblem(text) {
  * @returns {'x' | 'o' | 'draw'} Результат игры
  */
 function ticTacToeProblem(field) {
-    // Ваше решение
+    
 }
 
 module.exports = {
