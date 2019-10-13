@@ -8,7 +8,7 @@
  * @returns {Number} Сумма аргументов
  */
 function abProblem(a, b) {
-    if ((typeof a !== 'number') || (typeof b !== 'number')) {
+    if (typeof a !== 'number' || typeof b !== 'number') {
         throw new TypeError('В аргументы переданы не числа!');
     }
 
@@ -25,8 +25,15 @@ function abProblem(a, b) {
 function centuryByYearProblem(year) {
     if (typeof year !== 'number') {
         throw new TypeError('Передано не число!');
-    } else if (year < 0) {
+    }
+    if (year < 0) {
         throw new RangeError('Передано отрицательное число!');
+    }
+    if (year <= 100) {
+        return 1;
+    }
+    if (year % 100 === 0) {
+        return year / 100;
     }
 
     return (year - year % 100) / 100 + 1;
@@ -43,7 +50,8 @@ function colorsProblem(hexColor) {
     const reg = /^#[0-9A-Fa-f]{6}/; // Шаблон формата HEX
     if (typeof hexColor !== 'string') {
         throw new TypeError('Цвет передан не строкой!');
-    } else if (!reg.test(hexColor)) {
+    }
+    if (!reg.test(hexColor)) {
         throw new RangeError('Значения цвета выходят за пределы допустимых!');
     }
     // Посимвольный перевод в десятичную систему счисления
@@ -51,7 +59,7 @@ function colorsProblem(hexColor) {
     const g = parseInt(hexColor.charAt(3) + hexColor.charAt(4), 16);
     const b = parseInt(hexColor.charAt(5) + hexColor.charAt(6), 16);
 
-    return '(' + r + ', ' + g + ', ' + b + ')';
+    return `(${r}, ${g}, ${b})`;
 }
 
 /**
@@ -64,7 +72,8 @@ function colorsProblem(hexColor) {
 function fibonacciProblem(n) {
     if (typeof n !== 'number') {
         throw new TypeError('Передано не число!');
-    } else if ((n <= 0) || (!Number.isInteger(n))) {
+    }
+    if (n <= 0 || !Number.isInteger(n)) {
         throw new RangeError('Переданное число не является целым положительным!');
     }
     let fibPrePrev = 0; // Начальные значения для n = 1 или 2
@@ -86,13 +95,13 @@ function fibonacciProblem(n) {
  * @returns {(Any[])[]} Транспонированная матрица размера NxM
  */
 function matrixProblem(matrix) {
-    if ((!Array.isArray(matrix)) || (!matrix.every(Array.isArray))) {
+    if (!Array.isArray(matrix) || !matrix.every(Array.isArray)) {
         throw new TypeError('Передан не двумерный массив!');
     }
     let matrixTransp = [];
-    for (let i = 0; i < matrix.length; i ++) {
+    for (let i = 0; i < matrix[0].length; i ++) {
         matrixTransp.push([]);
-        for (let j = 0; j < matrix[i].length; j ++) {
+        for (let j = 0; j < matrix.length; j ++) {
             matrixTransp[i].push(matrix[j][i]);
         }
     }
@@ -109,9 +118,10 @@ function matrixProblem(matrix) {
  * @returns {String} Число n в системе счисления targetNs
  */
 function numberSystemProblem(n, targetNs) {
-    if ((typeof n !== 'number') || (typeof targetNs !== 'number')) {
+    if (typeof n !== 'number' || typeof targetNs !== 'number') {
         throw new TypeError('Переданные аргументы некорректного типа!');
-    } else if ((targetNs < 2) || (targetNs > 36)) {
+    }
+    if ((targetNs < 2) || (targetNs > 36)) {
         throw new RangeError('Система счисления может иметь значение от 2 до 36');
     }
 
@@ -143,7 +153,7 @@ function smilesProblem(text) {
     }
     const matches = text.match(/:-\)|\(-:/g);
 
-    return matches ? matches.length : 'Смайлики не найдены!';
+    return matches ? matches.length : 0;
 }
 
 /**
